@@ -8,25 +8,26 @@ using System.IO;
 public class UsersDataBase : MonoBehaviour
 {
 
-    public RectTransform prefab;
-    public Text details;
-    public RectTransform content;
-    public List<Users> userDetail = new List<Users>();
+    [SerializeField] private RectTransform prefab;
+    [SerializeField] private Text details;
+    [SerializeField] private RectTransform content;
+    [SerializeField] private List<Users> userDetail = new List<Users>();
 
     private void Start()
     {
         ReadJSON();
-        
+        InstantiatePrefab();
+    }
+
+    void InstantiatePrefab()
+    {
         foreach (var user in userDetail)
         {
-            Debug.Log(user.name);
             var instance = GameObject.Instantiate(prefab.gameObject) as GameObject;
             instance.transform.SetParent(content, false);
             InitializeUserView(instance, user);
-        }        
+        }
     }
-
-    
 
     void InitializeUserView(GameObject viewGameObject, Users user)
     {
@@ -69,8 +70,8 @@ public class UsersDataBase : MonoBehaviour
     public class Users
     {
         public string name;
-        public string age;
-        public string relation;
+        public int age;
+        public int relation;
         public int userId;
     }
 
