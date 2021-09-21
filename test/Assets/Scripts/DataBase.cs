@@ -6,12 +6,14 @@ using TMPro;
 
 public class DataBase : MonoBehaviour
 {
-    public TextMeshProUGUI user;
+    public List<Users> userDetail = new List<Users>();
+    
 
     // Start is called before the first frame update
     void Start()
     {
         ReadJSON();
+        
     }
 
     // Update is called once per frame
@@ -21,19 +23,6 @@ public class DataBase : MonoBehaviour
 
     }
 
-   
-  
-    
-     public void ReadJSON()
-     {
-         string path = Application.streamingAssetsPath + "/Users.dat";
-         string JSONString = File.ReadAllText(path);
-         Users[] user = JsonHelper.FromJson<Users>(JSONString);
-         Debug.Log(user[0].name);
-         Debug.Log(user[1].age);
-         Debug.Log(user[2].relation) ;
-    }
-    
 
     [System.Serializable]
     public class Users
@@ -41,8 +30,25 @@ public class DataBase : MonoBehaviour
         public string name;
         public int age;
         public int relation;
+        public int userId;
     }
 
+    public void ReadJSON()
+     {
+        string path = Application.streamingAssetsPath + "/Users.dat";
+        string JSONString = File.ReadAllText(path);      
+        Users[] user = JsonHelper.FromJson<Users>(JSONString);
+        
+ 
+        for (int i = 0; i < user.Length; i++)
+        {
+            userDetail.Add(new Users() {userId = i, name = user[i].name, age = user[i].age, relation = user[i].relation });
+            
+        }
+
+        
+     }
+    
     public static class JsonHelper
     {
         public static T[] FromJson<T>(string json)
