@@ -32,6 +32,7 @@ public class UsersDataBase : MonoBehaviour
     void InitializeUserView(GameObject viewGameObject, Users user)
     {
         TestUserView view = new TestUserView(viewGameObject.transform);
+        
         view.titleText.text = "UserID: " + user.userId;
         view.clickButton.GetComponentInChildren<Text>().text = "Show";
         view.clickButton.onClick.AddListener(
@@ -59,6 +60,7 @@ public class UsersDataBase : MonoBehaviour
         public Text titleText;
         public Button clickButton;
 
+      
         public TestUserView(Transform rootView)
         {
             titleText = rootView.Find("TitleText").GetComponent<Text>();
