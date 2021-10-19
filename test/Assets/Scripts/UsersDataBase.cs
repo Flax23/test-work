@@ -12,13 +12,14 @@ public class UsersDataBase : MonoBehaviour
     [SerializeField] private Text details;
     [SerializeField] private RectTransform content;
     [SerializeField] private List<Users> userDetail = new List<Users>();
-    [SerializeField] private List<Users> someUser = new List<Users>();
+    [SerializeField] private List<ContainerItem> someUser = new List<ContainerItem>();
 
 
     private void Start()
     {
         ReadJSON();
         //InstantiatePrefab();
+        FillItemsViewFromData();
     }
 
     //void InstantiatePrefab()
@@ -45,30 +46,45 @@ public class UsersDataBase : MonoBehaviour
     //        }
     //    );
     //}
+    public class ContainerItem : MonoBehaviour
+    {
+        [SerializeField] private Text initUserName;
+        public Button clickButton;
+
+        public void Init(string payload)
+        {       
+            this.initUserName.text = payload;
+            clickButton.transform.Find("ClickButton").GetComponent<Button>();
+            clickButton.GetComponent<Text>().text = "Show";
+        }
+
+    }
 
     private void FillItemsViewFromData()
     {
-        foreach (var i in userDetail)
+        foreach (var user in userDetail)
         {
             var item = GameObject.Instantiate(prefab, transform);
-            item.transform.SetParent(content, false);          
-            item.
-            someUser.Add(item);
+            item.transform.SetParent(content, false);
+           // InitializeUserView(user);
         }
     }
 
-    public class ContainerItem
+    void InitializeUserView(Users user)
     {
-        [SerializeField] private Text initName;
-        [SerializeField] private Text initUserId;
+        ContainerItem view = new ContainerItem();
 
-        public void Init(Users payload)
-        {
-            initName.text = payload.name;
-            initUserId.text = payload.userId.ToString();
-        }
+        view.Init(user.name);
+        someUser.Add(view);
+        view.clickButton.onClick.AddListener(
+            () =>
+            {
+                details.text = "Name: " + user.name + "\r\nAge: " + user.age + "\r\nRelation: " + user.relation;
+                //Debug.Log(view.titleText.text + " selected!");
+            }
+        );
     }
-     
+
     public void ReadJSON()
     {
         string path = Application.streamingAssetsPath + "/Users.dat";
