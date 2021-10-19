@@ -12,59 +12,71 @@ public class UsersDataBase : MonoBehaviour
     [SerializeField] private Text details;
     [SerializeField] private RectTransform content;
     [SerializeField] private List<Users> userDetail = new List<Users>();
+    [SerializeField] private List<Users> someUser = new List<Users>();
+
 
     private void Start()
     {
         ReadJSON();
-        InstantiatePrefab();
+        //InstantiatePrefab();
     }
 
-    void InstantiatePrefab()
+    //void InstantiatePrefab()
+    //{
+    //    foreach (var user in userDetail)
+    //    {
+    //        var instance = GameObject.Instantiate(prefab.gameObject) as GameObject;
+    //        instance.transform.SetParent(content, false);
+    //        InitializeUserView(instance, user);
+    //    }
+    //}
+
+    //void InitializeUserView(GameObject viewGameObject, Users user)
+    //{
+    //    TestUserView view = new TestUserView(viewGameObject.transform);
+
+    //    view.titleText.text = "UserID: " + user.userId;
+    //    view.clickButton.GetComponentInChildren<Text>().text = "Show";
+    //    view.clickButton.onClick.AddListener(
+    //        () =>
+    //        {
+    //            details.text = "Name: " + user.name  + "\r\nAge: " + user.age + "\r\nRelation: " + user.relation;
+    //            //Debug.Log(view.titleText.text + " selected!");
+    //        }
+    //    );
+    //}
+
+    private void FillItemsViewFromData()
     {
-        foreach (var user in userDetail)
+        foreach (var i in userDetail)
         {
-            var instance = GameObject.Instantiate(prefab.gameObject) as GameObject;
-            instance.transform.SetParent(content, false);
-            InitializeUserView(instance, user);
+            var item = GameObject.Instantiate(prefab, transform);
+            item.transform.SetParent(content, false);          
+            item.
+            someUser.Add(item);
         }
     }
 
-    void InitializeUserView(GameObject viewGameObject, Users user)
+    public class ContainerItem
     {
-        TestUserView view = new TestUserView(viewGameObject.transform);
-        
-        view.titleText.text = "UserID: " + user.userId;
-        view.clickButton.GetComponentInChildren<Text>().text = "Show";
-        view.clickButton.onClick.AddListener(
-            () =>
-            {
-                details.text = "Name: " + user.name  + "\r\nAge: " + user.age + "\r\nRelation: " + user.relation;
-                //Debug.Log(view.titleText.text + " selected!");
-            }
-        );
-    }
+        [SerializeField] private Text initName;
+        [SerializeField] private Text initUserId;
 
+        public void Init(Users payload)
+        {
+            initName.text = payload.name;
+            initUserId.text = payload.userId.ToString();
+        }
+    }
+     
     public void ReadJSON()
     {
         string path = Application.streamingAssetsPath + "/Users.dat";
         string JSONString = File.ReadAllText(path);
         Users[] user = JsonHelper.FromJson<Users>(JSONString);
-         for (int i = 0; i < user.Length; i++)
+        for (int i = 0; i < user.Length; i++)
         {
-          userDetail.Add(new Users() { userId = i, name = user[i].name, age = user[i].age, relation = user[i].relation });
-        }
-    }
-
-    public class TestUserView
-    {
-        public Text titleText;
-        public Button clickButton;
-
-      
-        public TestUserView(Transform rootView)
-        {
-            titleText = rootView.Find("TitleText").GetComponent<Text>();
-            clickButton = rootView.Find("ClickButton").GetComponent<Button>();
+            userDetail.Add(new Users() { userId = i, name = user[i].name, age = user[i].age, relation = user[i].relation });
         }
     }
 
