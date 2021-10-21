@@ -46,14 +46,14 @@ public class UsersDataBase : MonoBehaviour
     //        }
     //    );
     //}
-    public class ContainerItem : MonoBehaviour
+    public class ContainerItem
     {
         [SerializeField] private Text initUserName;
         public Button clickButton;
 
-        public void Init(string payload)
+        public void Init(SomePayload payload)
         {       
-            this.initUserName.text = payload;
+            this.initUserName.text = payload.userName;
             clickButton.transform.Find("ClickButton").GetComponent<Button>();
             clickButton.GetComponent<Text>().text = "Show";
         }
@@ -66,23 +66,15 @@ public class UsersDataBase : MonoBehaviour
         {
             var item = GameObject.Instantiate(prefab, transform);
             item.transform.SetParent(content, false);
-           // InitializeUserView(user);
+            item.Init(user.name);
+            someUser.Add(item);
+            
         }
     }
 
-    void InitializeUserView(Users user)
+    public class SomePayload
     {
-        ContainerItem view = new ContainerItem();
-
-        view.Init(user.name);
-        someUser.Add(view);
-        view.clickButton.onClick.AddListener(
-            () =>
-            {
-                details.text = "Name: " + user.name + "\r\nAge: " + user.age + "\r\nRelation: " + user.relation;
-                //Debug.Log(view.titleText.text + " selected!");
-            }
-        );
+        public string userName;
     }
 
     public void ReadJSON()
