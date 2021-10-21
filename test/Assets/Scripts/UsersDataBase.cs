@@ -51,9 +51,9 @@ public class UsersDataBase : MonoBehaviour
         [SerializeField] private Text initUserName;
         public Button clickButton;
 
-        public void Init(SomePayload payload)
+        public void Init(string payload)
         {       
-            this.initUserName.text = payload.userName;
+            this.initUserName.text = payload;
             clickButton.transform.Find("ClickButton").GetComponent<Button>();
             clickButton.GetComponent<Text>().text = "Show";
         }
@@ -64,18 +64,18 @@ public class UsersDataBase : MonoBehaviour
     {
         foreach (var user in userDetail)
         {
-            var item = GameObject.Instantiate(prefab, transform);
+            var item = RectTransform.Instantiate(prefab, transform);
             item.transform.SetParent(content, false);
-            item.Init(user.name);
-            someUser.Add(item);
+            item.GetComponent<ContainerItem>().Init(user.name);
+            someUser.Add(item.GetComponent<ContainerItem>());
             
         }
     }
 
-    public class SomePayload
-    {
-        public string userName;
-    }
+    //public class SomePayload
+    //{
+    //    public string userName;
+    //}
 
     public void ReadJSON()
     {
