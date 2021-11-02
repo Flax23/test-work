@@ -64,10 +64,10 @@ public class UsersDataBase : MonoBehaviour
     {
         foreach (var user in userDetail)
         {
-            var item = GameObject.Instantiate(prefab, transform);
-            item.transform.SetParent(content, false);
-            item.GetComponent<ContainerItem>().Init(user.name);
-           //someUser.Add();
+            ContainerItem item = Instantiate(prefab, transform);
+            //item.transform.SetParent(content, false);
+            //item.GetComponent<ContainerItem>().Init(user.name);
+            //someUser.Add
             
             
         }
