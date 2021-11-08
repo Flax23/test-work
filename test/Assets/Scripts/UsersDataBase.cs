@@ -8,7 +8,7 @@ using System.IO;
 public class UsersDataBase : MonoBehaviour
 {
 
-    [SerializeField] private RectTransform prefab;
+    [SerializeField] private ContainerItem prefab;
     [SerializeField] private Text details;
     [SerializeField] private RectTransform content;
     [SerializeField] private List<Users> userDetail = new List<Users>();
@@ -46,30 +46,32 @@ public class UsersDataBase : MonoBehaviour
     //        }
     //    );
     //}
-    public class ContainerItem
+    public class ContainerItem : MonoBehaviour
     {
         [SerializeField] private Text initUserName;
-        public Button clickButton;
+        [SerializeField] private Button clickButton;
 
         public void Init(string payload)
         {       
-            this.initUserName.text = payload;
-            clickButton.transform.Find("ClickButton").GetComponent<Button>();
-            clickButton.GetComponent<Text>().text = "Show";
+            initUserName.text = payload;
+            clickButton.onClick.AddListener(
+            () =>
+            {
+                // details.text = "Name: " + user.name + "\r\nAge: " + user.age + "\r\nRelation: " + user.relation;
+                //Debug.Log(view.titleText.text + " selected!");
+            }
+            );
         }
-
     }
 
     private void FillItemsViewFromData()
     {
         foreach (var user in userDetail)
         {
-            ContainerItem item = Instantiate(prefab, transform);
+            var item = GameObject.Instantiate(prefab, content) as ContainerItem;
             //item.transform.SetParent(content, false);
-            //item.GetComponent<ContainerItem>().Init(user.name);
-            //someUser.Add
-            
-            
+            item.Init(user.name);
+            someUser.Add(item);          
         }
     }
 
