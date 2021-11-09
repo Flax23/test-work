@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ContainerItemScript : MonoBehaviour
 {
-    private UsersDataBase UsersDataBaseScript;
+    public UsersDataBase UsersDataBaseScript;
 
     [SerializeField] private Text details;
     [SerializeField] private RectTransform content;
@@ -15,7 +15,7 @@ public class ContainerItemScript : MonoBehaviour
     private void Start()
     {
         UsersDataBaseScript = GameObject.Find("UsersDataBase").GetComponent<UsersDataBase>();
-        prefab = Resources.Load("ItemPrefab", typeof(ContainerItem)) as ContainerItem;
+        //prefab = Resources.Load("ItemPrefab", typeof(ContainerItem)) as ContainerItem;
         FillItemsViewFromData();
     }
 
@@ -34,6 +34,7 @@ public class ContainerItemScript : MonoBehaviour
     {
         [SerializeField] private Text initUserName;
         [SerializeField] private Button clickButton;
+        
 
         public void Init(string payload)
         {
@@ -41,8 +42,10 @@ public class ContainerItemScript : MonoBehaviour
             clickButton.onClick.AddListener(
             () =>
             {
-                
-                //GetComponent<ContainerItemScript>().details.text = "Name: " + user.name + "\r\nAge: " + user.age + "\r\nRelation: " + user.relation;              
+                foreach (var user in GetComponent<ContainerItemScript>().UsersDataBaseScript.userDetail)
+                {
+                    GetComponent<ContainerItemScript>().details.text = "Name: " + user.name + "\r\nAge: " + user.age + "\r\nRelation: " + user.relation;
+                }
             }
             );
         }
