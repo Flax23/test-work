@@ -14,8 +14,8 @@ public class ContainerItemScript : MonoBehaviour
 
     private void Start()
     {
-        UsersDataBaseScript = GameObject.Find("UsersDataBase").GetComponent<UsersDataBase>();
-        //prefab = Resources.Load("ItemPrefab", typeof(ContainerItem)) as ContainerItem;
+        UsersDataBaseScript = GameObject.Find("UsersDataBase").GetComponent<UsersDataBase>();                   
+        prefab = Resources.Load("Assets/Resources/Prefabs/ItemPrefab.prefab", typeof(ContainerItem)) as ContainerItem;
         FillItemsViewFromData();
     }
 
@@ -25,8 +25,7 @@ public class ContainerItemScript : MonoBehaviour
         {
             var item = GameObject.Instantiate(prefab, content) as ContainerItem;
             item.Init(user.name);
-            someUser.Add(item);
-            
+            someUser.Add(item);         
         }
     }
 
