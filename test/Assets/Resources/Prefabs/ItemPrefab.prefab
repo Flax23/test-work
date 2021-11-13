@@ -111,7 +111,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9889023b11f2bcb4f88da81e9cabe69c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 7590427182230459055}
+  prefab: {fileID: 113142892637985951}
+  qwerty: 0
 --- !u!1 &113142893117441087
 GameObject:
   m_ObjectHideFlags: 0
