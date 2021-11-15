@@ -26,13 +26,13 @@ public class ContainerItemScript : MonoBehaviour
         FillItemsViewFromData();     
     }
 
-    private void FillItemsViewFromData()
+    public void FillItemsViewFromData()
     {
         foreach (var user in usersDataBaseScript.userDetail)
         {
             test++;
             var item = GameObject.Instantiate(prefab, content) as ContainerItem;
-            item.Init(user.name);
+            item.Init(user.name, user);
             someUser.Add(item);         
         }
     }

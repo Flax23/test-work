@@ -798,9 +798,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   usersDataBaseScript: {fileID: 0}
+  test: 0
   details: {fileID: 639919969}
   content: {fileID: 995744740}
-  prefab: {fileID: 7590427182230459055, guid: a27e4e9d381e33846934d23bb288a9d7, type: 3}
+  prefab: {fileID: 0}
   someUser: []
 --- !u!1 &1007385021
 GameObject:

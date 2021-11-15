@@ -12,17 +12,24 @@ public class ContainerItem : MonoBehaviour
     [SerializeField] private Button clickButton;
     [SerializeField] private string testName;
 
-    public void Init(string payload)
+    public ContainerItemScript ContainerItemScript;
+
+    private void Start()
+    {       
+        ContainerItemScript = GameObject.Find("Content").GetComponent<ContainerItemScript>();
+    }
+    public void Init(string payload, UsersDataBase.Users users)
     {
         testName = payload;
+
+        this.initUserName = GameObject.Find("TitleText").GetComponent<Text>();
+        this.clickButton = GameObject.Find("ClickButton").GetComponent<Button>();
+
         this.initUserName.text = payload;
         this.clickButton.onClick.AddListener(
         () =>
-        {
-            foreach (var user in GetComponent<ContainerItemScript>().usersDataBaseScript.userDetail)
-            {
-                GetComponent<ContainerItemScript>().details.text = "Name: " + user.name + "\r\nAge: " + user.age + "\r\nRelation: " + user.relation;
-            }
+        {                         
+             ContainerItemScript.details.text = "Name: " + users.name + "\r\nAge: " + users.age + "\r\nRelation: " + users.relation;           
         }
         );
     }
