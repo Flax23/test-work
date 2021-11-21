@@ -23,7 +23,7 @@ public class ContainerItemScript : MonoBehaviour
         usersDataBaseScript = GameObject.Find("UsersDataBase").GetComponent<UsersDataBase>();
         //containerItemScript = GameObject.Find("Test").GetComponent<ContainerItem>();
         prefab = Resources.Load("Prefabs/ItemPrefab", typeof(ContainerItem)) as ContainerItem;
-        FillItemsViewFromData();     
+        FillItemsViewFromData();
     }
 
     public void FillItemsViewFromData()
@@ -32,8 +32,11 @@ public class ContainerItemScript : MonoBehaviour
         {
             test++;
             var item = GameObject.Instantiate(prefab, content) as ContainerItem;
-            item.Init(user.name, user);
-            someUser.Add(item);         
+            item.name = user.name;
+            item.Init(item, user);
+            someUser.Add(item);                    
         }
     }
+
+
 }
